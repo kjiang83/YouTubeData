@@ -1,0 +1,26 @@
+// run in google app script
+
+function YouTubeScraper(){
+    var j = 2
+    var spreadSheet = SpreadsheetApp.getActiveSpreadsheet()
+    var activesheet = spreadSheet.getActiveSheet()
+    
+    // returns 1000 results 
+    for (let i = 0; i < 20; i++)
+    {
+      var search = YouTube.Search.list('snippet, id', {q: 'minecraft', maxResults: 50})
+    
+      var results = search.items.map((item) => [item.id.videoId, item.snippet.title])
+  
+      var ids = results.map((id) => id[0]).join(',')
+  
+      var stats = YouTube.Videos.list('statistics', {id: ids})
+  
+      var videoStats = stats.items.map((item) => [item.statistics.viewCount, item.statistics.likeCount, item.statistics.dislikeCount, item.statistics.favoriteCount, item.statistics.commentCount])
+    
+     
+      activesheet.getRange(j, 1, results.length, results[0].length).setValues(results)
+      activesheet.getRange(j, 3, videoStats.length, videoStats[0].length).setValues(videoStats)
+       j = j + 50
+    }
+  }

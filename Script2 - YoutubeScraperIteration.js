@@ -1,5 +1,6 @@
 
 // this YouTUbe API Data Scraper searches for a keyword and returns 250 results
+// remember to add YouTube Data API v3 to services
 
 function YouTubeScraper(){
   var j = 2
